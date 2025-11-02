@@ -4,7 +4,7 @@ class ApiClient {
   final String baseUrl;
   final String? accessToken;
 
-  late Dio _dio;
+  late Dio dio;
 
   ApiClient({this.accessToken, required this.baseUrl}) {
     final BaseOptions dioOptions = BaseOptions(
@@ -14,9 +14,9 @@ class ApiClient {
           : null,
     );
 
-    _dio = Dio(dioOptions);
-    _dio.interceptors.add(_errorInterceptor());
-    _dio.interceptors.add(_successInterceptor());
+    dio = Dio(dioOptions);
+    dio.interceptors.add(_errorInterceptor());
+    dio.interceptors.add(_successInterceptor());
   }
 
   Interceptor _errorInterceptor() {
