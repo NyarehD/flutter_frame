@@ -15,6 +15,19 @@ String _jumpToGenerator(Position position) {
   return "window.map.jumpTo({center:[${position.longitude},${position.latitude}],zoom:14,bearing:0,pitch:0})";
 }
 
+const createCustomerMaker = '''
+function createCustomMarkerElement() {
+  const el = document.createElement('div');
+  el.className = 'current-location-marker';
+  el.style.width = '40px';
+  el.style.height = '40px';
+  el.style.backgroundSize = 'cover';
+  el.style.borderRadius = '50%';
+  el.style.boxShadow = '0 0 5px rgba(0,0,0,0.3)';
+  return el;
+}
+''';
+
 String _customMarker() {
   return '''const el = document.createElement('div');
 el.className = 'current-location-marker';
@@ -44,28 +57,8 @@ class _MapTestingState extends State<MapTesting> {
       ..loadRequest(Uri.parse(url));
 
     _controller.runJavaScript("console.log(window.map)");
+
     // _controller.runJavaScript("console.log('testing')");
-
-    Future.delayed(Duration(seconds: 5), () {
-      _initLocation();
-      List<String> positions = [
-        "window.map.jumpTo({center:[${16.8399209},${96.1278907}],zoom:14,bearing:0,pitch:0})",
-        "window.map.jumpTo({center:[${16.83920},${96.1278907}],zoom:14,bearing:0,pitch:0})",
-        "window.map.jumpTo({center:[${16.40000},${96.1278907}],zoom:14,bearing:0,pitch:0})",
-      ];
-      // for (var item in positions) {
-      Future.delayed(Duration(seconds: 10), () {
-        _controller.runJavaScript(positions[0]);
-      });
-
-      Future.delayed(Duration(seconds: 20), () {
-        _controller.runJavaScript(positions[1]);
-      });
-      Future.delayed(Duration(seconds: 30), () {
-        _controller.runJavaScript(positions[2]);
-      });
-      // }
-    });
   }
 
   @override
@@ -92,6 +85,33 @@ class _MapTestingState extends State<MapTesting> {
             currentPosition = position;
           });
           _controller.runJavaScript(_jumpToGenerator(position));
+          // Future.delayed(Duration(seconds: 5), () {
+
+          Future.delayed(Duration(seconds: 5), () {
+            _controller.runJavaScript('''
+ map.on('load', async function () {
+      await maptilersdk.helpers.addPolyline(map, {
+        data: '{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [${position.longitude}, ${position.latitude}],
+           [${position.longitude + 0.01}, ${position.latitude + 0.01}],
+        ]
+      }
+    }
+  ]
+}
+',
+        outline: true,
+      });
+    });
+    ''');
+          });
         });
   }
 
@@ -105,11 +125,7 @@ class _MapTestingState extends State<MapTesting> {
       body: WebViewWidget(controller: _controller),
       appBar: AppBar(title: Text("Testing Map")),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // if (currentPosition != null) {
-          //   _controller.runJavaScript(_jumpToGenerator(currentPosition!));
-          // }
-        },
+        onPressed: () {},
         child: Icon(Icons.public),
       ),
     );
