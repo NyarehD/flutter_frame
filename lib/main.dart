@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_frame/leaflet_map.dart';
 import 'package:flutter_frame/map_testing.dart';
 
 void main() {
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: MapTesting(),
+      // home: MapTesting(),
+      home: LeafletMap(),
     );
   }
 }

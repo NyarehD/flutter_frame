@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; padding: 0; }
+    /* star icon styling for the DivIcon */
+    .star-icon {
+      color: gold;
+      font-size: 28px;
+      line-height: 28px;
+      text-shadow: 0 0 2px rgba(0,0,0,0.8);
+      transform: translateY(-2px);
+      display: inline-block;
+      pointer-events: none; /* let clicks pass to the marker layer */
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // expose map globally so Flutter can call into it via runJavaScript
+    window.map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+    }).addTo(window.map);
+    // create a reusable star DivIcon
+    const starIcon = L.divIcon({
+      className: 'star-icon',
+      html: '★',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14]
+    });
+
+    // initial marker using the star icon
+    L.marker([51.5, -0.09], { icon: starIcon })
+      .addTo(window.map)
+      .bindPopup('Local Leaflet HTML asset')
+      .openPopup();
+
+    // keep a polyline representing the path taken (updated from Flutter)
+    window.flutterPath = [];
+    window.flutterPolyline = L.polyline(window.flutterPath, { color: 'red', weight: 4 }).addTo(window.map);
+
+    // Add a point to the Flutter path and update the polyline
+    window.addPathPoint = function(lat, lon) {
+      try {
+        const latitude = parseFloat(lat);
+        const longitude = parseFloat(lon);
+        if (Number.isFinite(latitude) && Number.isFinite(longitude)) {
+          window.flutterPath.push([latitude, longitude]);
+          if (window.flutterPolyline && window.flutterPolyline.setLatLngs) {
+            window.flutterPolyline.setLatLngs(window.flutterPath);
+          } else {
+            window.flutterPolyline = L.polyline(window.flutterPath, { color: 'red', weight: 4 }).addTo(window.map);
+          }
+        }
+      } catch (e) {
+        console.error('addPathPoint error', e);
+      }
+    };
+
+    // Replace entire path (array of [lat,lon])
+    window.setPath = function(pathArray) {
+      try {
+        window.flutterPath = pathArray.map(p => [parseFloat(p[0]), parseFloat(p[1])]);
+        if (window.flutterPolyline && window.flutterPolyline.setLatLngs) {
+          window.flutterPolyline.setLatLngs(window.flutterPath);
+        } else {
+          window.flutterPolyline = L.polyline(window.flutterPath, { color: 'red', weight: 4 }).addTo(window.map);
+        }
+      } catch (e) {
+        console.error('setPath error', e);
+      }
+    };
+
+    // Called from Flutter to move the map to the given location (animated)
+    window.onFlutterLocation = function(lat, lon, options) {
+      try {
+        if (!window.map) {
+          console.warn('Leaflet map not initialized yet');
+          return;
+        }
+
+        // parse numbers in case strings are passed
+        const latitude = parseFloat(lat);
+        const longitude = parseFloat(lon);
+        const zoom = (options && options.zoom) || 16;
+        const duration = (options && options.duration) || 1.0; // seconds
+
+        // Use flyTo for a smooth animated transition instead of instant setView
+        if (typeof window.map.flyTo === 'function') {
+          window.map.flyTo([latitude, longitude], zoom, { animate: true, duration: duration });
+        } else {
+          window.map.setView([latitude, longitude], zoom);
+        }
+
+        // Move existing marker if present (and ensure it has the star icon), otherwise add one
+        if (window.flutterMarker) {
+          window.flutterMarker.setLatLng([latitude, longitude]);
+          if (window.flutterMarker.setIcon) {
+            window.flutterMarker.setIcon(starIcon);
+          }
+        } else {
+          window.flutterMarker = L.marker([latitude, longitude], { icon: starIcon }).addTo(window.map);
+        }
+
+        // Optionally open a popup after the fly animation completes
+        // There's no built-in callback for flyTo end, so use a small timeout matching duration
+        setTimeout(() => {
+          if (window.flutterMarker && window.flutterMarker.bindPopup) {
+            window.flutterMarker.bindPopup('You are here (from Flutter)').openPopup();
+          }
+        }, Math.max(200, duration * 1000));
+      } catch (e) {
+        console.error('onFlutterLocation error', e);
+      }
+    };
+  </script>
+</body>
+</html>
