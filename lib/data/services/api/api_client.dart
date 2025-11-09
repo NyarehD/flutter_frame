@@ -19,6 +19,24 @@ class ApiClient {
     dio.interceptors.add(_successInterceptor());
   }
 
+  Future<Response<T>> get<T>(
+    String path,
+    T Function(Map<String, dynamic>) fromJson,
+  ) async {
+    final rawResponse = await dio.get(path);
+    final typedResponse = Response<T>(
+      data: fromJson(rawResponse.data),
+      requestOptions: rawResponse.requestOptions,
+      statusCode: rawResponse.statusCode,
+      statusMessage: rawResponse.statusMessage,
+      headers: rawResponse.headers,
+      isRedirect: rawResponse.isRedirect,
+      redirects: rawResponse.redirects,
+      extra: rawResponse.extra,
+    );
+    return typedResponse;
+  }
+
   Interceptor _errorInterceptor() {
     return InterceptorsWrapper(
       onRequest: (RequestOptions options, RequestInterceptorHandler handler) {

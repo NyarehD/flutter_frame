@@ -12,7 +12,7 @@ class ProductNotifier extends _$ProductNotifier {
 
   void fetchProducts() async {
     ProductRepository productRepository = ref.read(productRepositoryProvider);
-    final data = await productRepository.getById("1");
+    final data = await productRepository.getById("4");
     state = state.copyWith(
       product: data,
       status: ProductViewModelStateStatus.success,
