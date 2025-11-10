@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_frame/data/repositories/product/product_repository.dart';
 import 'package:flutter_frame/data/services/api/api_service/product_api_service.dart';
 import 'package:flutter_frame/domain/models/product/product_model.dart';
+import 'package:flutter_frame/domain/repositories/product_repository.dart';
 
 class ProductRepositoryImpl extends ProductRepository {
   final ProductApiService productApiService;
@@ -82,7 +82,7 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<List<ProductModel>> getAll() async {
+  Future<List<ProductModel>?> getAll() async {
     try {
       // Perform the request. Keep the generic type if your Dio is configured
       // to return a `ProductApiModel` directly via a transformer. If not,
@@ -91,8 +91,8 @@ class ProductRepositoryImpl extends ProductRepository {
 
       final api = (result.data);
 
-      return api
-              ?.map(
+      return api?.products
+              .map(
                 (api) => ProductModel(
                   id: api.id,
                   title: api.title,

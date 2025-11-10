@@ -12,6 +12,7 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _ProductView(),
+      // body: const Text("toString"),
       appBar: AppBar(title: Text("Title")),
     );
   }
@@ -63,7 +64,7 @@ class _ContentState extends ConsumerState<_Content> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          productModel.brand,
+          productModel.brand ?? "fallback",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
@@ -72,7 +73,10 @@ class _ContentState extends ConsumerState<_Content> {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             decoration: BoxDecoration(
-              border: BoxBorder.all(color: (const Color.fromARGB(110, 242, 166, 255)), width: 4),
+              border: BoxBorder.all(
+                color: (const Color.fromARGB(110, 242, 166, 255)),
+                width: 4,
+              ),
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
             child: ImageCarousel(imageUrls: productModel.images),

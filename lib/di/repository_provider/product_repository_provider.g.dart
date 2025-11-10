@@ -54,4 +54,4 @@ final class ProductRepositoryProvider
   }
 }
 
-String _$productRepositoryHash() => r'9b94303135f3ffd3ea24bf001c6e2fb5deb3c59a';
+String _$productRepositoryHash() => r'abb34de1e51a40a7fb76215066111e9c22de6185';

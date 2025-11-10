@@ -16,7 +16,7 @@ abstract class ProductApiModel with _$ProductApiModel {
     required double rating,
     required int stock,
     required List<String> tags,
-    required String brand,
+    required String? brand,
     required String sku,
     required int weight,
     required ProductApiDimensions dimensions,

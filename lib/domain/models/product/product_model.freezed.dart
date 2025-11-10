@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProductModel implements DiagnosticableTreeMixin {
 
- int get id; String get title; String get description; String get category; double get price; double get discountPercentage; double get rating; int get stock; List<String> get tags; String get brand; String get sku; int get weight; ProductDimensions get dimensions; String get warrantyInformation; String get shippingInformation; String get availabilityStatus; List<ProductReview> get reviews; String get returnPolicy; int get minimumOrderQuantity; ProductMeta get meta; List<String> get images; String get thumbnail;
+ int get id; String get title; String get description; String get category; double get price; double get discountPercentage; double get rating; int get stock; List<String> get tags; String? get brand; String get sku; int get weight; ProductDimensions get dimensions; String get warrantyInformation; String get shippingInformation; String get availabilityStatus; List<ProductReview> get reviews; String get returnPolicy; int get minimumOrderQuantity; ProductMeta get meta; List<String> get images; String get thumbnail;
 /// Create a copy of ProductModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -54,7 +54,7 @@ abstract mixin class $ProductModelCopyWith<$Res>  {
   factory $ProductModelCopyWith(ProductModel value, $Res Function(ProductModel) _then) = _$ProductModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String title, String description, String category, double price, double discountPercentage, double rating, int stock, List<String> tags, String brand, String sku, int weight, ProductDimensions dimensions, String warrantyInformation, String shippingInformation, String availabilityStatus, List<ProductReview> reviews, String returnPolicy, int minimumOrderQuantity, ProductMeta meta, List<String> images, String thumbnail
+ int id, String title, String description, String category, double price, double discountPercentage, double rating, int stock, List<String> tags, String? brand, String sku, int weight, ProductDimensions dimensions, String warrantyInformation, String shippingInformation, String availabilityStatus, List<ProductReview> reviews, String returnPolicy, int minimumOrderQuantity, ProductMeta meta, List<String> images, String thumbnail
 });
 
 
@@ -71,7 +71,7 @@ class _$ProductModelCopyWithImpl<$Res>
 
 /// Create a copy of ProductModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? category = null,Object? price = null,Object? discountPercentage = null,Object? rating = null,Object? stock = null,Object? tags = null,Object? brand = null,Object? sku = null,Object? weight = null,Object? dimensions = null,Object? warrantyInformation = null,Object? shippingInformation = null,Object? availabilityStatus = null,Object? reviews = null,Object? returnPolicy = null,Object? minimumOrderQuantity = null,Object? meta = null,Object? images = null,Object? thumbnail = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? category = null,Object? price = null,Object? discountPercentage = null,Object? rating = null,Object? stock = null,Object? tags = null,Object? brand = freezed,Object? sku = null,Object? weight = null,Object? dimensions = null,Object? warrantyInformation = null,Object? shippingInformation = null,Object? availabilityStatus = null,Object? reviews = null,Object? returnPolicy = null,Object? minimumOrderQuantity = null,Object? meta = null,Object? images = null,Object? thumbnail = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -82,8 +82,8 @@ as double,discountPercentage: null == discountPercentage ? _self.discountPercent
 as double,rating: null == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as double,stock: null == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
 as int,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
-as List<String>,brand: null == brand ? _self.brand : brand // ignore: cast_nullable_to_non_nullable
-as String,sku: null == sku ? _self.sku : sku // ignore: cast_nullable_to_non_nullable
+as List<String>,brand: freezed == brand ? _self.brand : brand // ignore: cast_nullable_to_non_nullable
+as String?,sku: null == sku ? _self.sku : sku // ignore: cast_nullable_to_non_nullable
 as String,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
 as int,dimensions: null == dimensions ? _self.dimensions : dimensions // ignore: cast_nullable_to_non_nullable
 as ProductDimensions,warrantyInformation: null == warrantyInformation ? _self.warrantyInformation : warrantyInformation // ignore: cast_nullable_to_non_nullable
@@ -198,7 +198,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String title,  String description,  String category,  double price,  double discountPercentage,  double rating,  int stock,  List<String> tags,  String brand,  String sku,  int weight,  ProductDimensions dimensions,  String warrantyInformation,  String shippingInformation,  String availabilityStatus,  List<ProductReview> reviews,  String returnPolicy,  int minimumOrderQuantity,  ProductMeta meta,  List<String> images,  String thumbnail)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String title,  String description,  String category,  double price,  double discountPercentage,  double rating,  int stock,  List<String> tags,  String? brand,  String sku,  int weight,  ProductDimensions dimensions,  String warrantyInformation,  String shippingInformation,  String availabilityStatus,  List<ProductReview> reviews,  String returnPolicy,  int minimumOrderQuantity,  ProductMeta meta,  List<String> images,  String thumbnail)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductModel() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.category,_that.price,_that.discountPercentage,_that.rating,_that.stock,_that.tags,_that.brand,_that.sku,_that.weight,_that.dimensions,_that.warrantyInformation,_that.shippingInformation,_that.availabilityStatus,_that.reviews,_that.returnPolicy,_that.minimumOrderQuantity,_that.meta,_that.images,_that.thumbnail);case _:
@@ -219,7 +219,7 @@ return $default(_that.id,_that.title,_that.description,_that.category,_that.pric
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String title,  String description,  String category,  double price,  double discountPercentage,  double rating,  int stock,  List<String> tags,  String brand,  String sku,  int weight,  ProductDimensions dimensions,  String warrantyInformation,  String shippingInformation,  String availabilityStatus,  List<ProductReview> reviews,  String returnPolicy,  int minimumOrderQuantity,  ProductMeta meta,  List<String> images,  String thumbnail)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String title,  String description,  String category,  double price,  double discountPercentage,  double rating,  int stock,  List<String> tags,  String? brand,  String sku,  int weight,  ProductDimensions dimensions,  String warrantyInformation,  String shippingInformation,  String availabilityStatus,  List<ProductReview> reviews,  String returnPolicy,  int minimumOrderQuantity,  ProductMeta meta,  List<String> images,  String thumbnail)  $default,) {final _that = this;
 switch (_that) {
 case _ProductModel():
 return $default(_that.id,_that.title,_that.description,_that.category,_that.price,_that.discountPercentage,_that.rating,_that.stock,_that.tags,_that.brand,_that.sku,_that.weight,_that.dimensions,_that.warrantyInformation,_that.shippingInformation,_that.availabilityStatus,_that.reviews,_that.returnPolicy,_that.minimumOrderQuantity,_that.meta,_that.images,_that.thumbnail);case _:
@@ -239,7 +239,7 @@ return $default(_that.id,_that.title,_that.description,_that.category,_that.pric
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String title,  String description,  String category,  double price,  double discountPercentage,  double rating,  int stock,  List<String> tags,  String brand,  String sku,  int weight,  ProductDimensions dimensions,  String warrantyInformation,  String shippingInformation,  String availabilityStatus,  List<ProductReview> reviews,  String returnPolicy,  int minimumOrderQuantity,  ProductMeta meta,  List<String> images,  String thumbnail)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String title,  String description,  String category,  double price,  double discountPercentage,  double rating,  int stock,  List<String> tags,  String? brand,  String sku,  int weight,  ProductDimensions dimensions,  String warrantyInformation,  String shippingInformation,  String availabilityStatus,  List<ProductReview> reviews,  String returnPolicy,  int minimumOrderQuantity,  ProductMeta meta,  List<String> images,  String thumbnail)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductModel() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.category,_that.price,_that.discountPercentage,_that.rating,_that.stock,_that.tags,_that.brand,_that.sku,_that.weight,_that.dimensions,_that.warrantyInformation,_that.shippingInformation,_that.availabilityStatus,_that.reviews,_that.returnPolicy,_that.minimumOrderQuantity,_that.meta,_that.images,_that.thumbnail);case _:
@@ -272,7 +272,7 @@ class _ProductModel with DiagnosticableTreeMixin implements ProductModel {
   return EqualUnmodifiableListView(_tags);
 }
 
-@override final  String brand;
+@override final  String? brand;
 @override final  String sku;
 @override final  int weight;
 @override final  ProductDimensions dimensions;
@@ -337,7 +337,7 @@ abstract mixin class _$ProductModelCopyWith<$Res> implements $ProductModelCopyWi
   factory _$ProductModelCopyWith(_ProductModel value, $Res Function(_ProductModel) _then) = __$ProductModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String title, String description, String category, double price, double discountPercentage, double rating, int stock, List<String> tags, String brand, String sku, int weight, ProductDimensions dimensions, String warrantyInformation, String shippingInformation, String availabilityStatus, List<ProductReview> reviews, String returnPolicy, int minimumOrderQuantity, ProductMeta meta, List<String> images, String thumbnail
+ int id, String title, String description, String category, double price, double discountPercentage, double rating, int stock, List<String> tags, String? brand, String sku, int weight, ProductDimensions dimensions, String warrantyInformation, String shippingInformation, String availabilityStatus, List<ProductReview> reviews, String returnPolicy, int minimumOrderQuantity, ProductMeta meta, List<String> images, String thumbnail
 });
 
 
@@ -354,7 +354,7 @@ class __$ProductModelCopyWithImpl<$Res>
 
 /// Create a copy of ProductModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? category = null,Object? price = null,Object? discountPercentage = null,Object? rating = null,Object? stock = null,Object? tags = null,Object? brand = null,Object? sku = null,Object? weight = null,Object? dimensions = null,Object? warrantyInformation = null,Object? shippingInformation = null,Object? availabilityStatus = null,Object? reviews = null,Object? returnPolicy = null,Object? minimumOrderQuantity = null,Object? meta = null,Object? images = null,Object? thumbnail = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? category = null,Object? price = null,Object? discountPercentage = null,Object? rating = null,Object? stock = null,Object? tags = null,Object? brand = freezed,Object? sku = null,Object? weight = null,Object? dimensions = null,Object? warrantyInformation = null,Object? shippingInformation = null,Object? availabilityStatus = null,Object? reviews = null,Object? returnPolicy = null,Object? minimumOrderQuantity = null,Object? meta = null,Object? images = null,Object? thumbnail = null,}) {
   return _then(_ProductModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -365,8 +365,8 @@ as double,discountPercentage: null == discountPercentage ? _self.discountPercent
 as double,rating: null == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as double,stock: null == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
 as int,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
-as List<String>,brand: null == brand ? _self.brand : brand // ignore: cast_nullable_to_non_nullable
-as String,sku: null == sku ? _self.sku : sku // ignore: cast_nullable_to_non_nullable
+as List<String>,brand: freezed == brand ? _self.brand : brand // ignore: cast_nullable_to_non_nullable
+as String?,sku: null == sku ? _self.sku : sku // ignore: cast_nullable_to_non_nullable
 as String,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
 as int,dimensions: null == dimensions ? _self.dimensions : dimensions // ignore: cast_nullable_to_non_nullable
 as ProductDimensions,warrantyInformation: null == warrantyInformation ? _self.warrantyInformation : warrantyInformation // ignore: cast_nullable_to_non_nullable

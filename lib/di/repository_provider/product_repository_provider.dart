@@ -1,4 +1,4 @@
-import 'package:flutter_frame/data/repositories/product/product_repository.dart';
+import 'package:flutter_frame/domain/repositories/product_repository.dart';
 import 'package:flutter_frame/data/repositories/product/product_repository_impl.dart';
 import 'package:flutter_frame/data/services/api/api_client.dart';
 import 'package:flutter_frame/data/services/api/api_service/product_api_service.dart';

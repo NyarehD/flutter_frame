@@ -16,7 +16,7 @@ abstract class ProductModel with _$ProductModel {
     required double rating,
     required int stock,
     required List<String> tags,
-    required String brand,
+    required String? brand,
     required String sku,
     required int weight,
     required ProductDimensions dimensions,

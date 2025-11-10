@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_frame/data/services/api/dto/response_dto.dart';
 import 'package:flutter_frame/data/services/api/model/product/product_api_model.dart';
+import 'package:flutter_frame/data/services/api/model/product/product_list_api_model.dart';
 
 interface class ProductApiService {
   final Dio dio;
@@ -14,12 +15,10 @@ interface class ProductApiService {
     return ResponseDto.transform(response, data);
   }
 
-  Future<Response<List<ProductApiModel>>> getList() async {
+  Future<Response<ProductListApiModel>> getList() async {
     final response = await dio.get("/product");
 
-    final data = (response.data as List<dynamic>)
-        .map((item) => ProductApiModel.fromJson(item))
-        .toList();
+    final data = ProductListApiModel.fromJson(response.data);
     return ResponseDto.transform(response, data);
   }
 }

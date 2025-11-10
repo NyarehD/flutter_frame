@@ -17,7 +17,7 @@ _ProductModel _$ProductModelFromJson(Map<String, dynamic> json) =>
       rating: (json['rating'] as num).toDouble(),
       stock: (json['stock'] as num).toInt(),
       tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-      brand: json['brand'] as String,
+      brand: json['brand'] as String?,
       sku: json['sku'] as String,
       weight: (json['weight'] as num).toInt(),
       dimensions: ProductDimensions.fromJson(
