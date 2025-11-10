@@ -1,5 +1,17 @@
 import 'package:dio/dio.dart';
 
+sealed class TypeTest {}
+
+class ListTypeTest extends TypeTest {
+  late Map<String, dynamic> type;
+  ListTypeTest({required this.type});
+}
+
+class ItemTypeTest extends TypeTest {
+  late List<Map<String, dynamic>> type;
+  ItemTypeTest({required this.type});
+}
+
 class ApiClient {
   final String baseUrl;
   final String? accessToken;
@@ -19,10 +31,7 @@ class ApiClient {
     dio.interceptors.add(_successInterceptor());
   }
 
-  Future<Response<T>> get<T>(
-    String path,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+  Future<Response<T>> get<T>(String path, T Function(TypeTest) fromJson) async {
     final rawResponse = await dio.get(path);
     final typedResponse = Response<T>(
       data: fromJson(rawResponse.data),
