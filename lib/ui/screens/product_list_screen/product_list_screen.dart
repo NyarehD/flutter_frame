@@ -3,6 +3,7 @@ import 'package:flutter_frame/domain/models/product/product_model.dart';
 import 'package:flutter_frame/ui/screens/product_list_screen/view_models/product_list_notifier.dart';
 import 'package:flutter_frame/ui/screens/product_list_screen/view_models/product_list_view_model_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductListScreen extends StatelessWidget {
   const ProductListScreen({super.key});
@@ -58,12 +59,14 @@ class _ContentState extends ConsumerState<_Content> {
       itemCount: products.length,
       itemBuilder: (context, index) {
         final product = products[index];
-        final email = product.toString();
-        final avatarText = product.title.isNotEmpty ? product.title[0].toUpperCase() : '?';
+        final avatarText = product.title.isNotEmpty
+            ? product.title[0].toUpperCase()
+            : '?';
         return ListTile(
           leading: CircleAvatar(child: Text(avatarText)),
           title: Text(product.title.toString()),
           subtitle: Text(product.brand.toString()),
+          onTap: () => context.push("/product/${product.id}"),
         );
       },
     );

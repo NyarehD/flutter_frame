@@ -8,8 +8,11 @@ interface class ProductApiService {
 
   ProductApiService({required this.dio});
 
-  Future<Response<ProductApiModel>> getId(String id) async {
-    final response = await dio.get("/product/$id");
+  Future<Response<ProductApiModel>> getId(
+    String id,
+    CancelToken? cancelToken,
+  ) async {
+    final response = await dio.get("/product/$id", cancelToken: cancelToken);
 
     final data = ProductApiModel.fromJson(response.data);
     return ResponseDto.transform(response, data);

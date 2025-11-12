@@ -6,12 +6,14 @@ import 'package:flutter_frame/ui/widgets/carousel/image_carousel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProductScreen extends StatelessWidget {
-  const ProductScreen({super.key});
+  final String id;
+
+  const ProductScreen({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _ProductView(),
+      body: _ProductView(id: id),
       // body: const Text("toString"),
       appBar: AppBar(title: Text("Title")),
     );
@@ -19,7 +21,9 @@ class ProductScreen extends StatelessWidget {
 }
 
 class _ProductView extends ConsumerStatefulWidget {
-  const _ProductView();
+  final String id;
+
+  const _ProductView({required this.id});
 
   @override
   ConsumerState<_ProductView> createState() => _ProductViewState();
@@ -29,7 +33,7 @@ class _ProductViewState extends ConsumerState<_ProductView> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(productProvider.notifier).fetchProducts();
+      ref.read(productProvider.notifier).fetchProducts(widget.id);
     });
     super.initState();
   }
@@ -38,7 +42,8 @@ class _ProductViewState extends ConsumerState<_ProductView> {
   Widget build(BuildContext context) {
     final status = ref.watch(productProvider.select((p) => p.status));
 
-    return status == ProductViewModelStateStatus.initial
+    return status == ProductViewModelStateStatus.initial ||
+            status == ProductViewModelStateStatus.loading
         ? const Center(child: CircularProgressIndicator())
         : const _Content();
   }

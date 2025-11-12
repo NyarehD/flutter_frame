@@ -4,9 +4,16 @@ import 'package:go_router/go_router.dart';
 
 final routes = GoRouter(
   routes: [
-    GoRoute(path: '/', builder: (context, state) {
-      return ProductListScreen();
-    }),
-    GoRoute(path: "/product", builder: (context, state) => ProductScreen()),
+    GoRoute(
+      path: '/',
+      builder: (context, state) {
+        return ProductListScreen();
+      },
+    ),
+    GoRoute(
+      path: "/product/:productId",
+      builder: (context, state) =>
+          ProductScreen(id: state.pathParameters["productId"] ?? ""),
+    ),
   ],
 );
