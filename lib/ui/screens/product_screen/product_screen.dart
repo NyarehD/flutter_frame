@@ -1,4 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_frame/data/repositories/product/product_repository_impl.dart';
+import 'package:flutter_frame/data/services/api/api_service/product_api_service.dart';
 import 'package:flutter_frame/domain/models/product/product_model.dart';
 import 'package:flutter_frame/ui/screens/product_screen/view_models/product_notifier.dart';
 import 'package:flutter_frame/ui/screens/product_screen/view_models/product_view_model_state.dart';
@@ -57,6 +60,22 @@ class _Content extends ConsumerStatefulWidget {
 }
 
 class _ContentState extends ConsumerState<_Content> {
+  CancelToken? cancelToken;
+
+  void callApi() {
+    final repo = ProductRepositoryImpl(
+      productApiService: ProductApiService(
+        dio: Dio(BaseOptions(baseUrl: "https://dummyjson.com/")),
+      ),
+    );
+    cancelToken = CancelToken();
+    repo.getById("2", cancelToken);
+  }
+
+  void cancelApi() {
+    cancelToken?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ProductModel? productModel = ref.watch(
@@ -104,6 +123,12 @@ class _ContentState extends ConsumerState<_Content> {
               );
             },
           ),
+        ),
+        Row(
+          children: [
+            FloatingActionButton(onPressed: callApi, child: Text("Call")),
+            FloatingActionButton(onPressed: cancelApi, child: Text("Cancel")),
+          ],
         ),
       ],
     );

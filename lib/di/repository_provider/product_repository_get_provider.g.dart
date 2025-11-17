@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'proudct_repository_get_provicer.dart';
+part of 'product_repository_get_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -26,7 +26,7 @@ final class ProductRepositoryGetProvider
   }) : super(
          retry: null,
          name: r'productRepositoryGetProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -65,7 +65,7 @@ final class ProductRepositoryGetProvider
 }
 
 String _$productRepositoryGetHash() =>
-    r'137739bcd67f85665555e0e1066597b47f745de3';
+    r'fbb4c06315c95ea755fd545731e53c9e3f9b964f';
 
 final class ProductRepositoryGetFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ProductModel?>, String> {
@@ -75,7 +75,7 @@ final class ProductRepositoryGetFamily extends $Family
         name: r'productRepositoryGetProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   ProductRepositoryGetProvider call(String id) =>

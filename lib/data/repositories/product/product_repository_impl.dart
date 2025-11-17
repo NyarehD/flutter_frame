@@ -1,13 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_frame/data/services/api/api_service/product_api_service.dart';
+import 'package:flutter_frame/data/services/api/api_service_error_handler.dart';
 import 'package:flutter_frame/data/services/api/dto/product_api_dto.dart';
 import 'package:flutter_frame/domain/models/product/product_model.dart';
 import 'package:flutter_frame/domain/repositories/product_repository.dart';
 
-class ProductRepositoryImpl extends ProductRepository {
+class ProductRepositoryImpl
+    with ApiServiceErrorHandler
+    implements ProductRepository {
   final ProductApiService productApiService;
 
-  // Add a proper typed parameter so the analyzer knows the type.
   ProductRepositoryImpl({required this.productApiService});
 
   @override
@@ -18,17 +20,8 @@ class ProductRepositoryImpl extends ProductRepository {
       final api = result.data!;
 
       return ProductApiDto.transform(api);
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 404) return null;
-      print(
-        'ProductRepositoryImpl.getById - DioError: ${e.message}, '
-        'statusCode=${e.response?.statusCode}, data=${e.response?.data}',
-      );
-      return null;
-    } catch (e, st) {
-      // Any other unexpected error - log and return null.
-      print('ProductRepositoryImpl.getById - Unexpected error: $e\n$st');
-      return null;
+    } catch (e) {
+      return handleError(e);
     }
   }
 
